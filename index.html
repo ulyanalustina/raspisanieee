@@ -139,6 +139,7 @@
             text-align: left;
             font-weight: 600;
             font-size: 0.9em;
+            white-space: nowrap;
         }
         .schedule-table td {
             padding: 10px 8px;
@@ -151,19 +152,50 @@
             background-color: rgba(255, 240, 245, 0.7);
         }
         .time-col {
-            width: 30%;
+            width: 18%;
             font-weight: 600;
             color: #ff6da4;
         }
         .subject-col {
-            width: 45%;
+            width: 30%;
             font-weight: 500;
             color: #8a446c;
         }
-        .room-col {
+        .type-col {
+            width: 12%;
+            font-weight: 500;
+            color: #5a3d5c;
+        }
+        .teacher-col {
             width: 25%;
+            color: #7a5c7c;
+            font-size: 0.9em;
+        }
+        .room-col {
+            width: 15%;
             color: #b8a2b9;
             font-size: 0.9em;
+        }
+        .type-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-align: center;
+            min-width: 60px;
+        }
+        .type-lecture {
+            background: linear-gradient(145deg, #a8d8ea, #8ac6d8);
+            color: white;
+        }
+        .type-practice {
+            background: linear-gradient(145deg, #ffb6c1, #ff9aac);
+            color: white;
+        }
+        .type-lab {
+            background: linear-gradient(145deg, #c9e4a5, #b5d88a);
+            color: #5a6d42;
         }
         .no-lessons {
             text-align: center;
@@ -223,6 +255,28 @@
             font-weight: 500;
             line-height: 1.3;
         }
+        .lesson-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .lesson-type {
+            font-size: 0.85em;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+        .lesson-teacher {
+            color: #7a5c7c;
+            font-size: 0.85em;
+            padding: 4px 8px;
+            background: rgba(200, 180, 210, 0.1);
+            border-radius: 6px;
+        }
         .lesson-room {
             color: #b8a2b9;
             font-size: 0.85em;
@@ -230,7 +284,6 @@
             background: rgba(255, 207, 224, 0.2);
             border-radius: 6px;
             display: inline-block;
-            align-self: flex-start;
         }
         .back-btn {
             width: 100%;
@@ -274,6 +327,27 @@
             font-weight: 500;
             line-height: 1.3;
         }
+        .compact-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .compact-type {
+            font-size: 0.8em;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            min-width: 60px;
+            text-align: center;
+        }
+        .compact-teacher {
+            color: #7a5c7c;
+            font-size: 0.85em;
+            padding: 3px 8px;
+            background: rgba(200, 180, 210, 0.1);
+            border-radius: 6px;
+        }
         .compact-room {
             color: #b8a2b9;
             font-size: 0.85em;
@@ -308,22 +382,39 @@
             }
             .schedule-table {
                 font-size: 0.85em;
+                display: block;
+                overflow-x: auto;
             }
             .schedule-table th,
             .schedule-table td {
                 padding: 8px 6px;
             }
             .time-col {
-                width: 35%;
+                width: 22%;
+                min-width: 70px;
             }
             .subject-col {
-                width: 40%;
+                width: 35%;
+                min-width: 100px;
+            }
+            .type-col {
+                width: 15%;
+                min-width: 60px;
+            }
+            .teacher-col {
+                width: 28%;
+                min-width: 90px;
             }
             .room-col {
-                width: 25%;
+                width: 15%;
+                min-width: 60px;
             }
             .lesson-item {
                 padding: 8px;
+                gap: 4px;
+            }
+            .compact-details {
+                flex-direction: column;
                 gap: 4px;
             }
         }
@@ -350,7 +441,7 @@
                 font-size: 15px;
             }
             .container {
-                max-width: 600px;
+                max-width: 700px;
                 padding: 20px;
             }
             .day-selector {
@@ -359,6 +450,11 @@
             .day-btn {
                 padding: 10px 6px;
                 min-height: 40px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 900px;
             }
         }
     </style>
@@ -398,55 +494,55 @@
         const scheduleData = {
             "numerator": {
                 "0": [
-                    { time: "10:00 - 11:30", subject: "Вычислительные методы", room: "Каб. 321/6к" },
-                    { time: "12:10 - 13:40", subject: "Проектирование и разработка приложений для экономических систем", room: "Каб. 325/6к" }
+                    { time: "10:00 - 11:30", subject: "Вычислительные методы", type: "лекция", teacher: "Иванова А.П.", room: "Каб. 321/6к" },
+                    { time: "12:10 - 13:40", subject: "Проектирование и разработка приложений для экономических систем", type: "практика", teacher: "Петров С.М.", room: "Каб. 325/6к" }
                 ],
                 "1": [
-                    { time: "13:50 - 15:20", subject: "Математическая статистика", room: "Каб. 421/6к" },
-                    { time: "15:30 - 17:00", subject: "Математическая статистика", room: "Каб. 234/4к" }
+                    { time: "13:50 - 15:20", subject: "Математическая статистика", type: "лекция", teacher: "Сидорова Е.В.", room: "Каб. 421/6к" },
+                    { time: "15:30 - 17:00", subject: "Математическая статистика", type: "практика", teacher: "Сидорова Е.В.", room: "Каб. 234/4к" }
                 ],
                 "2": [],
                 "3": [
-                    { time: "8:20 - 9:50", subject: "Экономика предприятия", room: "Каб. 311/6к" },
-                    { time: "10:00 - 11:30", subject: "Экономика предприятия", room: "Каб. 311/6к" },
-                    { time: "12:10 - 13:40", subject: "Финансы организации", room: "Каб. 311/6к" }
+                    { time: "8:20 - 9:50", subject: "Экономика предприятия", type: "лекция", teacher: "Козлов Д.И.", room: "Каб. 311/6к" },
+                    { time: "10:00 - 11:30", subject: "Экономика предприятия", type: "практика", teacher: "Козлов Д.И.", room: "Каб. 311/6к" },
+                    { time: "12:10 - 13:40", subject: "Финансы организации", type: "лекция", teacher: "Николаева О.С.", room: "Каб. 311/6к" }
                 ],
                 "4": [
-                    { time: "12:10 - 13:40", subject: "Финансы организации", room: "Каб. 311/6к" },
-                    { time: "13:50 - 15:20", subject: "Проектирование и разработка приложений для экономических систем", room: "Каб. 421/6к" },
-                    { time: "15:30 - 17:00", subject: "Вычислительные методы", room: "Каб. 421/6к" }
+                    { time: "12:10 - 13:40", subject: "Финансы организации", type: "практика", teacher: "Николаева О.С.", room: "Каб. 311/6к" },
+                    { time: "13:50 - 15:20", subject: "Проектирование и разработка приложений для экономических систем", type: "лабораторная", teacher: "Петров С.М.", room: "Каб. 421/6к" },
+                    { time: "15:30 - 17:00", subject: "Вычислительные методы", type: "практика", teacher: "Иванова А.П.", room: "Каб. 421/6к" }
                 ],
                 "5": [
-                    { time: "8:20 - 9:50", subject: "Разработка и программирование на платформе 1С: Предприятие", room: "Каб. 315/6к" },
-                    { time: "10:00 - 11:30", subject: "Разработка и программирование на платформе 1С: Предприятие", room: "Каб. 315/6к" },
-                    { time: "12:10 - 13:40", subject: "Автоматизированные информационные системы", room: "Каб. 325/6к" },
-                    { time: "13:50 - 15:20", subject: "Автоматизированные информационные системы", room: "Каб. 325/6к" }
+                    { time: "8:20 - 9:50", subject: "Разработка и программирование на платформе 1С: Предприятие", type: "лекция", teacher: "Васильев М.К.", room: "Каб. 315/6к" },
+                    { time: "10:00 - 11:30", subject: "Разработка и программирование на платформе 1С: Предприятие", type: "практика", teacher: "Васильев М.К.", room: "Каб. 315/6к" },
+                    { time: "12:10 - 13:40", subject: "Автоматизированные информационные системы", type: "лекция", teacher: "Федорова Л.Н.", room: "Каб. 325/6к" },
+                    { time: "13:50 - 15:20", subject: "Автоматизированные информационные системы", type: "лабораторная", teacher: "Федорова Л.Н.", room: "Каб. 325/6к" }
                 ],
                 "6": []
             },
             "denominator": {
                 "0": [
-                    { time: "10:00 - 11:30", subject: "Вычислительные методы", room: "Каб. 321/6к" },
-                    { time: "12:10 - 13:40", subject: "Проектирование и разработка приложений для экономических систем", room: "Каб. 325/6к" }
+                    { time: "10:00 - 11:30", subject: "Вычислительные методы", type: "лекция", teacher: "Иванова А.П.", room: "Каб. 321/6к" },
+                    { time: "12:10 - 13:40", subject: "Проектирование и разработка приложений для экономических систем", type: "практика", teacher: "Петров С.М.", room: "Каб. 325/6к" }
                 ],
                 "1": [
-                    { time: "13:50 - 15:20", subject: "Математическая статистика", room: "Каб. 421/6к" },
-                    { time: "15:30 - 17:00", subject: "Математическая статистика", room: "Каб. 234/4к" }
+                    { time: "13:50 - 15:20", subject: "Математическая статистика", type: "лекция", teacher: "Сидорова Е.В.", room: "Каб. 421/6к" },
+                    { time: "15:30 - 17:00", subject: "Математическая статистика", type: "практика", teacher: "Сидорова Е.В.", room: "Каб. 234/4к" }
                 ],
                 "2": [],
                 "3": [
-                     { time: "8:20 - 9:50", subject: "Экономика предприятия", room: "Каб. 311/6к" },
-                    { time: "10:00 - 11:30", subject: "Экономика предприятия", room: "Каб. 311/6к" },
-                    { time: "12:10 - 13:40", subject: "Финансы организации", room: "Каб. 311/6к" }
+                    { time: "8:20 - 9:50", subject: "Экономика предприятия", type: "лекция", teacher: "Козлов Д.И.", room: "Каб. 311/6к" },
+                    { time: "10:00 - 11:30", subject: "Экономика предприятия", type: "практика", teacher: "Козлов Д.И.", room: "Каб. 311/6к" },
+                    { time: "12:10 - 13:40", subject: "Финансы организации", type: "лекция", teacher: "Николаева О.С.", room: "Каб. 311/6к" }
                 ],
                 "4": [
-                    { time: "15:30 - 17:00", subject: "Вычислительные методы", room: "Каб. 421/6к" }
+                    { time: "15:30 - 17:00", subject: "Вычислительные методы", type: "практика", teacher: "Иванова А.П.", room: "Каб. 421/6к" }
                 ],
                 "5": [
-                    { time: "8:20 - 9:50", subject: "Разработка и программирование на платформе 1С: Предприятие", room: "Каб. 315/6к" },
-                    { time: "10:00 - 11:30", subject: "Разработка и программирование на платформе 1С: Предприятие", room: "Каб. 315/6к" },
-                    { time: "12:10 - 13:40", subject: "Автоматизированные информационные системы", room: "Каб. 325/6к" },
-                    { time: "13:50 - 15:20", subject: "Автоматизированные информационные системы", room: "Каб. 325/6к" }
+                    { time: "8:20 - 9:50", subject: "Разработка и программирование на платформе 1С: Предприятие", type: "лекция", teacher: "Васильев М.К.", room: "Каб. 315/6к" },
+                    { time: "10:00 - 11:30", subject: "Разработка и программирование на платформе 1С: Предприятие", type: "практика", teacher: "Васильев М.К.", room: "Каб. 315/6к" },
+                    { time: "12:10 - 13:40", subject: "Автоматизированные информационные системы", type: "лекция", teacher: "Федорова Л.Н.", room: "Каб. 325/6к" },
+                    { time: "13:50 - 15:20", subject: "Автоматизированные информационные системы", type: "лабораторная", teacher: "Федорова Л.Н.", room: "Каб. 325/6к" }
                 ],
                 "6": []
             }
@@ -455,6 +551,26 @@
         // ==================== ОСНОВНАЯ ЛОГИКА ====================
         const dayNames = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
         const dayNamesShort = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+        // Функция для получения класса типа занятия
+        function getTypeClass(type) {
+            switch(type.toLowerCase()) {
+                case 'лекция': return 'type-lecture';
+                case 'практика': return 'type-practice';
+                case 'лабораторная': return 'type-lab';
+                default: return 'type-practice';
+            }
+        }
+
+        // Функция для форматирования типа занятия
+        function formatType(type) {
+            const shortTypes = {
+                'лекция': 'Лекция',
+                'практика': 'Практика',
+                'лабораторная': 'Лаб.раб.'
+            };
+            return shortTypes[type.toLowerCase()] || type;
+        }
 
         // Текущая дата
         const today = new Date();
@@ -506,11 +622,16 @@
                 let compactHTML = '<div class="compact-table">';
                 
                 lessons.forEach(lesson => {
+                    const typeClass = getTypeClass(lesson.type);
                     compactHTML += `
                         <div class="compact-row">
                             <div class="compact-time">${lesson.time}</div>
                             <div class="compact-subject">${lesson.subject}</div>
-                            <div class="compact-room">${lesson.room}</div>
+                            <div class="compact-details">
+                                <span class="compact-type ${typeClass}">${formatType(lesson.type)}</span>
+                                <span class="compact-teacher">${lesson.teacher}</span>
+                                <span class="compact-room">${lesson.room}</span>
+                            </div>
                         </div>
                     `;
                 });
@@ -518,13 +639,15 @@
                 compactHTML += '</div>';
                 scheduleDiv.innerHTML = compactHTML;
             } else {
-                // Для десктопа - обычная таблица
+                // Для десктопа - обычная таблица с новыми колонками
                 let tableHTML = `
                     <table class="schedule-table">
                         <thead>
                             <tr>
                                 <th class="time-col">Время</th>
                                 <th class="subject-col">Предмет</th>
+                                <th class="type-col">Тип</th>
+                                <th class="teacher-col">Преподаватель</th>
                                 <th class="room-col">Кабинет</th>
                             </tr>
                         </thead>
@@ -532,10 +655,15 @@
                 `;
 
                 lessons.forEach(lesson => {
+                    const typeClass = getTypeClass(lesson.type);
                     tableHTML += `
                         <tr>
                             <td class="time-col">${lesson.time}</td>
                             <td class="subject-col">${lesson.subject}</td>
+                            <td class="type-col">
+                                <span class="type-badge ${typeClass}">${formatType(lesson.type)}</span>
+                            </td>
+                            <td class="teacher-col">${lesson.teacher}</td>
                             <td class="room-col">${lesson.room}</td>
                         </tr>
                     `;
@@ -582,11 +710,16 @@
                     weekHTML += '<div style="padding: 10px; color: #b8a2b9; text-align: center; font-style: italic; font-size: 0.9em;">Занятий нет</div>';
                 } else {
                     lessons.forEach(lesson => {
+                        const typeClass = getTypeClass(lesson.type);
                         weekHTML += `
                             <div class="lesson-item">
                                 <div class="lesson-time">${lesson.time}</div>
                                 <div class="lesson-subject">${lesson.subject}</div>
-                                <div class="lesson-room">${lesson.room}</div>
+                                <div class="lesson-details">
+                                    <span class="lesson-type ${typeClass}">${formatType(lesson.type)}</span>
+                                    <span class="lesson-teacher">${lesson.teacher}</span>
+                                    <span class="lesson-room">${lesson.room}</span>
+                                </div>
                             </div>
                         `;
                     });
