@@ -1,5 +1,57 @@
 <!DOCTYPE html>
 <html lang="ru">
+<script>
+    // Проверяем, открыто ли в Яндекс.Браузере
+    function isYandexBrowser() {
+        // Проверяем наличие специфичных для Яндекса свойств
+        return window.navigator.userAgent.indexOf('YaBrowser') > -1 || 
+               window.navigator.vendor === 'Yandex' ||
+               window.navigator.userAgent.indexOf('Yandex') > -1;
+    }
+    
+    // Если не Яндекс Браузер - показываем уведомление
+    if (!isYandexBrowser()) {
+        // Создаем красивое уведомление
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            const notice = document.createElement('div');
+            notice.style.cssText = `
+                background: linear-gradient(145deg, #fff0f7, #ffe6f0);
+                border: 2px solid #ff6da4;
+                border-radius: 12px;
+                padding: 16px;
+                margin: 12px 0;
+                text-align: center;
+            `;
+            notice.innerHTML = `
+                <div style="font-size: 1.2em; margin-bottom: 8px;">📱</div>
+                <div style="font-weight: bold; color: #d63384; margin-bottom: 6px;">
+                    Рекомендуем открыть в Яндекс.Браузере
+                </div>
+                <div style="color: #8a6d8b; font-size: 0.9em; margin-bottom: 12px;">
+                    Для лучшего отображения расписания
+                </div>
+                <button onclick="window.location.href = 'yandex://' + window.location.href;" 
+                        style="
+                            background: linear-gradient(145deg, #ff85b3, #ff6da4);
+                            color: white;
+                            border: none;
+                            padding: 10px 24px;
+                            border-radius: 10px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-size: 0.95em;
+                        ">
+                    Открыть в Яндекс.Браузере → 
+                </button>
+                <div style="font-size: 0.8em; color: #b8a2b9; margin-top: 8px;">
+                    (или скопируйте ссылку и вставьте в Яндекс Браузер)
+                </div>
+            `;
+            container.insertBefore(notice, container.firstChild);
+        });
+    }
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
